@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Logo from "./logo";
 import { useConvexAuth } from "convex/react";
+
 import { useScrollTop } from "@/hooks/use-scroll-top";
 import { cn } from "@/lib/utils";
 import { ModeToggle } from "@/components/mode-toggle";
@@ -37,7 +38,7 @@ const Navbar = () => {
             )}
             {isAuthenticated && !isLoading && (
                <>
-                  <Button variant={"ghost"} size={"sm"}>
+                  <Button variant={"ghost"} size={"sm"} asChild>
                      <Link href="/documents">
                         Enter Jotion
                      </Link>
@@ -45,7 +46,7 @@ const Navbar = () => {
                   <UserButton
                      afterSignOutUrl="/"
                   />
-               </>
+               </> 
             )}
             <ModeToggle/>
          </div>
