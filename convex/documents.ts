@@ -26,15 +26,29 @@ export const create = mutation({
    }
 })
 
-export const get = query({
-   handler: async(context) => {
-      const identity = await context.auth.getUserIdentity
+export const getSidebar = query({
+   args: {
+      parentDocument: v.optional(v.id("documents"))
+   },
+   handler: async(context, args) => {
+      const identity = await context.auth.getUserIdentity()
 
       if(!identity) {
-         throw Error("Not authenticated")
+         throw new Error("Not authenticated")
       }
 
-      const documents = await context.db.query("documents").collect()
-      return documents
+      const userId = identity.subject
+
+      const documents = await context.db
+         .query("documents")
+         .withIndex("by_user_parent", (query) => query
+            .eq("userId", userId)
+            .eq("parentDocument", args.parentDocument)
+         )
+         .filter((query) => query.eq(query.field("isArchived"), false))
+         .order("desc")
+         .collect()
+
+         return documents
    }
 })
