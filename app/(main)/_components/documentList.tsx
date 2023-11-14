@@ -61,7 +61,7 @@ export const DocumentList = ({ parentDocumentId, level = 0,}: DocumentListProps)
                level === 0 && "hidden"
             )}
          >
-            No pages
+            No pages inside
          </p>
          {documents.map((document) => (
             <div key={document._id}>
@@ -74,6 +74,7 @@ export const DocumentList = ({ parentDocumentId, level = 0,}: DocumentListProps)
                   active={params.documentId === document._id}
                   level={level}
                   onExpand={() => onExpand(document._id)}
+                  expanded={expanded[document._id]}
                />
                {expanded[document._id] && (
                   <DocumentList
