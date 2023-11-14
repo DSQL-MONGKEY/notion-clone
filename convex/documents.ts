@@ -52,3 +52,14 @@ export const getSidebar = query({
          return documents
    }
 })
+
+export const archive = mutation({
+   args: { id: v.id("documents") },
+   handler: async (context, args) => {
+      const identity = await context.auth.getUserIdentity()
+
+      if(!identity) {
+         
+      }
+   }
+})
